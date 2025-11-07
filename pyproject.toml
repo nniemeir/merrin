@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "merrin"
+version = "1.0.0"
+description = "A basic system monitor for Linux systems. Currently supports AMD CPUs and GPUs only."
+authors = [ { name = "Jacob Niemeir", email = "nniemeir@protonmail.com" } ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["merrin*"]
+exclude = ["assets*"]
+
+[project.scripts]
+merrin = "merrin.__main__:main"

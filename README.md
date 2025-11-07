@@ -13,9 +13,9 @@ A basic system monitor for Linux systems. Currently supports AMD CPUs and GPUs o
 * Uptime
 
 ## Installation
-Run the installation script
+Install with pip
 ```
-./install.sh
+pip install .
 ```
 
 ## Usage
