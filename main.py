@@ -45,6 +45,7 @@ def main(stdscr, update_interval):
         if key == ord('q'):
             break
         time.sleep(update_interval)
+        stdscr.erase()
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)

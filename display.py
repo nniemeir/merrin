@@ -3,12 +3,8 @@ import curses
 import config
 
 def print_metrics(stdscr, data):
-    for row in range(6):
-        for col in range(config.FIELD_TWO_COL, config.FIELD_TWO_WIDTH):
-            stdscr.addstr(row, col, " ")
-
     current_row = 0
-
+    
     stdscr.addstr(current_row, 0, "CPU Utilization:", curses.A_BOLD)
     if data['cpu_usage'] is not None:
         stdscr.addstr(current_row, config.FIELD_TWO_COL, f"{data['cpu_usage']}%")

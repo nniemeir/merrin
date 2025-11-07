@@ -1,7 +1,5 @@
 # The reported metrics appear 17 characters in to their respective rows
 FIELD_TWO_COL = 17 
-# The maximum amount of characters per metric
-FIELD_TWO_WIDTH = 32
 
 DEFAULT_UPDATE_INTERVAL = 1
 CPU_USAGE_INTERVAL = 1
