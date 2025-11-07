@@ -20,7 +20,13 @@ Run the installation script
 
 ## Usage
 ```
-merrin
+merrin [OPTIONS]
+```
+
+### Options
+```
+-h                      Display program usage
+-u <interval>           Specify update interval in seconds
 ```
 
 ## License
