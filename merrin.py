@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 import time
 import os
+import curses
+from curses import wrapper
+import sys
+import getopt
 
 def get_uptime():
     try:
@@ -160,44 +164,86 @@ def get_gpu_temp():
                             continue
     return None
 
-def main():
+def print_metrics(stdscr):
+    for row in range(6):
+        for col in range(17, 64):
+            stdscr.addstr(row, col, " ")
+    current_row = 0
+    stdscr.addstr(current_row, 0, "CPU Utilization:", curses.A_BOLD)
     usage = get_cpu_usage()
     if usage is not None:
-        print("CPU Utilization: {0}%".format(usage))
+        stdscr.addstr(current_row, 17, f"{usage}%")
     else: 
-        print("CPU Utilization: unavailable") 
-    
+        stdscr.addstr(current_row, 17, "Unavailable")
+    current_row += 1
+    stdscr.addstr(current_row, 0, "CPU Temperature:", curses.A_BOLD)
     cpu_temp = get_cpu_temp()
     if cpu_temp is not None:
-        print(f"CPU Temp: {cpu_temp} C")
+        stdscr.addstr(current_row, 17, f"{cpu_temp} C")
     else:
-        print("CPU Temp: unavailable")
-
+        stdscr.addstr(current_row, 17, "Unavailable")
+    current_row += 1
+    stdscr.addstr(current_row, 0, "GPU VRAM Usage:", curses.A_BOLD)
     gpu_usages = get_gpu_usage()
     if gpu_usages is not None:
-        print("GPU VRAM Usage:")
         for card, usage in gpu_usages.items():
-            print(f"\t{card}: {usage['used']} MB / {usage['total']} MB")
+            stdscr.addstr(current_row, 17, f"{card}: {usage['used']} MB / {usage['total']} MB")
+            current_row += 1
     else: 
-        print("GPU: unavailable") 
-    
+        stdscr.addstr(current_row, 17, "Unavailable")
+        current_row += 1
+    stdscr.addstr(current_row, 0, "GPU Temperature:", curses.A_BOLD)
     gpu_temp = get_gpu_temp()
     if gpu_temp is not None:
-        print(f"GPU Temp: {gpu_temp} C")
+        stdscr.addstr(current_row, 17, f"{gpu_temp} C")
     else:
-        print("GPU Temp: unavailable")
-
+        stdscr.addstr(current_row, 17, "Unavailable")
+    current_row += 1
+    stdscr.addstr(current_row, 0, "RAM:", curses.A_BOLD)
     memory_info = get_meminfo()
     if memory_info is not None:
-        print(f"RAM: {memory_info['used']} MB / {memory_info['total']} MB")
+        stdscr.addstr(current_row, 17, f"{memory_info['used']} MB / {memory_info['total']} MB")
     else: 
-        print("RAM: unavailable") 
-
+        stdscr.addstr(current_row, 17, "Unavailable")
+    current_row += 1
+    stdscr.addstr(current_row, 0, "Uptime:", curses.A_BOLD)
     uptime = get_uptime()
     if uptime is not None:
-        print(f"Uptime: {uptime['hours']} hours, {uptime['minutes']} minutes")
+        stdscr.addstr(current_row, 17, f"{uptime['hours']} hours, {uptime['minutes']} minutes")
     else: 
-        print("Uptime: unavailable") 
+        stdscr.addstr(current_row, 17, "Unavailable")
+    stdscr.refresh()
 
-if __name__=="__main__":
-    main()
+def handle_args(stdscr):
+    update_interval = 1
+    argv = sys.argv[1:]
+    try:
+        opts, args = getopt.getopt(argv, "hu:")
+    except:
+        print("Error")
+
+    for opt, arg in opts:
+        if opt == '-h':
+            stdscr.addstr(0, 0, f"-h\tDisplay this message")
+            stdscr.addstr(1, 0, f"-u\tSpecify update interval in seconds")
+            while (True):
+                key = stdscr.getch()
+                if key == ord('q'):            
+                    sys.exit()
+        elif opt == '-u':
+            update_interval = int(arg)
+    return update_interval
+
+def main(stdscr):
+    stdscr.clear()
+    update_interval = handle_args(stdscr)
+    if update_interval is None:
+        return
+    while (True):
+        print_metrics(stdscr)
+        key = stdscr.getch()
+        if key == ord('q'):
+            break
+        time.sleep(update_interval)
+
+wrapper(main)
