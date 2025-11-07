@@ -175,7 +175,7 @@ def main():
 
     gpu_usages = get_gpu_usage()
     if gpu_usages is not None:
-        print("GPU Utilization:")
+        print("GPU VRAM Usage:")
         for card, usage in gpu_usages.items():
             print(f"\t{card}: {usage['used']} MB / {usage['total']} MB")
     else: 
