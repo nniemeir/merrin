@@ -7,7 +7,7 @@ A basic system monitor for Linux systems. Currently supports AMD CPUs and GPUs o
 ## Metrics
 * CPU Utilization %
 * CPU Temperature
-* GPU Utilization
+* GPU VRAM Usage
 * GPU Temp
 * RAM Utilization
 * Uptime
