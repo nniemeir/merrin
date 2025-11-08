@@ -35,7 +35,7 @@ def print_metrics(stdscr, data):
     if data['gpu_usage'] is not None:
         for card, usage in data['gpu_usage'].items():
             gpu_color = curses.color_pair(1)
-            if data['gpu_usage'] >= 95:
+            if (usage['used'] / usage['total']) * 100 >= 95:
                 gpu_color = curses.color_pair(2)
             stdscr.addstr(current_row, merrin.config.FIELD_TWO_COL, f"{card}: {usage['used']} MB / {usage['total']} MB", gpu_color)
             current_row += 1
