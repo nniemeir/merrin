@@ -5,6 +5,7 @@ import os
 import signal
 import sys
 import time
+import curses
 from curses import wrapper
 from sys import platform
 
@@ -30,7 +31,9 @@ def handle_args():
             update_interval = int(arg)
     return update_interval
 
-def main_curses(stdscr, update_interval): 
+def main_curses(stdscr, update_interval):
+    curses.start_color() 
+    curses.use_default_colors()
     stdscr.clear()
     stdscr.nodelay(True)
     while (True):
