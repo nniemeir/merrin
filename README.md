@@ -1,4 +1,4 @@
-# Merrin (WIP)
+# Merrin
 A basic system monitor for Linux systems. Currently supports AMD CPUs and GPUs only.
 
 ## Demo
