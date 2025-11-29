@@ -1,17 +1,40 @@
+# ----------------
+# Build System
+# ----------------
 [build-system]
-requires = ["setuptools>=61", "wheel"]
+# Tools required to build the project
+# setuptools 61 introduced declaring project metadata in pyproject.toml
+# wheel defines the .whl format, which is a binary package format for Python
+# wheel is significantly faster than installing from source directly
+requires = ["setuptools>=61", "wheel"] 
+# Specifies setuptools as the backend for building.
 build-backend = "setuptools.build_meta"
 
+# ----------------
+# Project Metadata
+# ----------------
 [project]
-name = "merrin"
-version = "1.0.0"
+# These fields should be self explanatory
+name = "merrin" 
+version = "1.2.0"
 description = "A basic system monitor for Linux systems. Currently supports AMD CPUs and GPUs only."
 authors = [ { name = "Jacob Niemeir", email = "nniemeir@protonmail.com" } ]
 
+# ----------------
+# Package Discovery
+# ----------------
 [tool.setuptools.packages.find]
+# Search for packages starting in the current directory
 where = ["."]
+# Include all packages and modules starting with merrin
 include = ["merrin*"]
+# Exclude all directories starting with "assets"
+# This directory only contains an image preview
 exclude = ["assets*"]
 
+# ----------------
+# Entry Points (Scripts)
+# ----------------
 [project.scripts]
-merrin = "merrin.__main__:main"
+# Creates a CLI command 'merrin' that runs the main() function inside merrin/__main__.py
+merrin = "merrin.__main__:main" 

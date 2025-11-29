@@ -1,2 +1,7 @@
-__version__ = "1.0.0"
+"""
+__init__.py
 
+The presence of this file marks the directory as a Python package
+"""
+
+__version__ = "1.2.0"
